@@ -16,7 +16,7 @@ class ExpenseCycle < ActiveRecord::Base
 		new_house_account_cycle = ExpenseCycle.new
 		new_house_account_cycle.group_id = group_id
 		new_house_account_cycle.from_date = current_cycle.to_date + 1.days
-		new_house_account_cycle.to_date = new_house_account_cycle.from_date + 1.months
+		new_house_account_cycle.to_date = new_house_account_cycle.from_date.end_of_month
 		new_house_account_cycle.save
 
 		#Update the house_settings table with new house_account_cycle_id
