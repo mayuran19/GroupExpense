@@ -1,5 +1,5 @@
 class RegistrationsController < ApplicationController
-	skip_before_action :authorize, only: [:create]
+	skip_before_action :authenticate, only: [:create]
 	layout 'login'
 
 	def create
