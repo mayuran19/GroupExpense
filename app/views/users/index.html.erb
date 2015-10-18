@@ -1,0 +1,29 @@
+<div class="panel panel-primary">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Listing members</div>
+  <!-- Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Group</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.loggedin_group.groupname %></td>
+          <td><%= user.firstname %> <%= user.lastname %></td>
+          <td><%= user.email %></td>
+          <td>
+            <%= authorized_link_to @current_user.id, @current_user.loggedin_group.id, 'Edit', edit_user_path(user), class: "btn btn-primary"  %>
+            <%= authorized_link_to @current_user.id, @current_user.loggedin_group.id, 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-primary" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%= authorized_link_to @current_user.id, @current_user.loggedin_group.id, 'New member', new_user_path, class: "btn btn-primary" %>

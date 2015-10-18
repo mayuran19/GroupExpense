@@ -1,0 +1,53 @@
+<div class="well well-sm">
+  Summary of account cycle: <%= @account_cycle.from_date %> to <%= @account_cycle.to_date %>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">Account summary breakdown</div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Account Item</th>
+        <th class="text-right">Amount(D)</th>
+        <th class="text-right">Amount(C)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Total spendings</td>
+        <td class="text-right"><%=@total_summary.amount%></td>
+         <td class="text-right">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+      </tr>
+      <% @spendings.each do |spending| %>
+        <tr>
+          <td>Amount spent by <b><%=spending.payer.full_name%></b></td>
+          <td class="text-right"><%=spending.amount%></td>
+          <td class="text-right"></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td colspan="3">
+      </tr>
+      <% @expenses.each do |expense| %>
+        <tr>
+          <td>Total expenses for <b><%=expense.payer.full_name%></b></td>
+          <td class="text-right">&nbsp;</td>
+          <td class="text-right"><%=expense.amount%></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td colspan="3">
+      </tr>
+      <% @receivers.each do |receiver| %>
+        <tr>
+          <td>Amount to be paid by <b><%=receiver.receiver.full_name%></b> to <b><%=receiver.payer.full_name%></b></td>
+          <td class="text-right"><%=receiver.amount%></td>
+          <td class="text-right"></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

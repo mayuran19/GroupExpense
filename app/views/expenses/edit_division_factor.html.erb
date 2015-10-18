@@ -1,0 +1,68 @@
+<div class="well well-sm">
+  Current account cycle: <%= @current_account_cycle.from_date %> to <%= @current_account_cycle.to_date %>
+</div>
+
+<div class="panel panel-primary">
+<div class="panel-heading">Update the division factor</div>
+<div class="panel-body">
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+
+  <% if @expense_factor.errors.any? %>
+    <div class="alert alert-danger">
+      <b><%= pluralize(@expense_factor.errors.count, "Error") %> prohibited this expense from being saved:</b>
+      <ul>
+      <% @expense_factor.errors.messages.each do |message| %>
+        <li><%= message[1][0] %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_tag("/expenses/" + @expense_factor.expense.id.to_s + "/update_division_factor") do |f| %>
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td>Expense</td>
+        <td><%= @expense_factor.expense.expense_description %></td>
+      </tr>
+      <tr>
+        <td>Spent date</td>
+        <td><%= @expense_factor.expense.expense_date %></td>
+      </tr>
+      <tr>
+        <td>Amount</td>
+        <td><%= @expense_factor.expense.amount %></td>
+      </tr>
+      <tr>
+        <td>Amount per tenant</td>
+        <td>
+        <% @expense_factor.expense.expenses_per_user.each do |expense_per_user| %>
+          <%= expense_per_user.user.full_name %> : <%= number_with_precision expense_per_user.amount, :precision => 2 %>
+          <br/>
+        <% end %>
+        </td>
+      </tr>
+      <% @expense_factor.expense.expenses_per_user.each do |expense_per_user| %>
+      <tr>
+        <td>
+          Division factor to <b><%= expense_per_user.user.full_name %></b>
+        </td>
+        <td>
+          <%= text_field_tag("expense_per_users[" + expense_per_user.id.to_s + "]", @expense_factor.expense_per_users[expense_per_user.id.to_s], class: "form-control") %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="form-group">
+    <div class="col-sm-offset-0 col-sm-11">
+      <%= submit_tag("Update", :class => "btn btn-primary") %>
+      <%= link_to 'Back', root_path, class: "btn btn-default" %>
+    </div>
+  </div>
+  <% end %>
+  </div>
+</div>
+</div>
+</div>

@@ -1,0 +1,46 @@
+<div class="panel panel-primary">
+<div class="panel-heading">Edit current expense cycle</div>
+<div class="panel-body">
+<div class="row">
+<div class="col-md-6 col-md-offset-3">
+
+<% if @expense_cycle_form.errors.any? %>
+    <div class="alert alert-danger">
+      <b><%= pluralize(@expense_cycle_form.errors.count, "Error") %> prohibited this expense cycle from being saved:</b>
+      <ul>
+      <% @expense_cycle_form.errors.messages.each do |message| %>
+        <li><%= message[1][0] %></li>
+      <% end %>
+      </ul>
+    </div>
+<% end %>
+
+<%
+  url = expense_cycle_path(@expense_cycle_form.id)
+  method = 'put'
+%>
+
+<%= form_for(@expense_cycle_form, :url => url, :method => method, :html => {class: "form-horizontal"}) do |f| %>
+  <div class="form-group">
+    <%= f.label :from_date, 'From date', class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= f.date_select :from_date, {}, {:disabled => true, :class => "form-control", :style => "display: inline;width: 32.5%;"} %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :to_date, 'To date', class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= f.date_select :to_date, {}, {:class => "form-control", :style => "display: inline;width: 32.5%;"} %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+      <%= f.submit 'Update', :class => "btn btn-primary" %>
+      <%= link_to 'Back', expense_cycles_path, class: "btn btn-default" %>
+    </div>
+  </div>
+<% end %>
+</div>
+</div>
+</div>
+</div>

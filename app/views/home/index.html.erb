@@ -1,0 +1,61 @@
+<div class="well well-sm">
+  Current account cycle: <%= @current_expense_cycle.from_date %> to <%= @current_expense_cycle.to_date %>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">Fixed expenses to be paid</div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Expense</th>
+        <th class="text-right">Default amount</th>
+        <th>Default payee</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @fixed_expenses.each do |fixed_expense| %>
+        <tr>
+          <td><%=fixed_expense.name%></td>
+          <td class="text-right"><%=fixed_expense.default_amount%></td>
+          <td><%=fixed_expense.default_payee.full_name%></td>
+          <td>
+          <%= authorized_link_to @current_user.id, @current_user.loggedin_group.id, 'Update', new_expense_fixed_expense_path(fixed_expense), method: :get, class: "btn btn-primary" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">Expenses for current cycle</div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Expense</th>
+        <th class="text-right">Amount</th>
+        <th>Spent by</th>
+        <th>Spent date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @expenses.each do |expense| %>
+        <tr>
+          <td><%=expense.expense_description%></td>
+          <td class="text-right"><%=expense.amount%></td>
+          <td><%=expense.user.full_name%></td>
+          <td><%=expense.expense_date%></td>
+          <td>
+          <%= link_to 'Update', edit_division_factor_expense_path(expense), method: :get, class: "btn btn-primary" %>
+          <%= link_to 'Destroy', expense, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger" %>
+          <%# link_to 'View', expense_expenses_per_user_index_path(expense), method: :get, class: "btn btn-primary" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to 'New expense', new_expense_path, class: "btn btn-primary" %>

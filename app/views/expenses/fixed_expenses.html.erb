@@ -1,0 +1,30 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">Fixed expenses</div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Expense name</th>
+        <th>Is mandatory</th>
+        <th>Default amount</th>
+        <th>Default payee</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @fixed_expenses.each do |fixed_expense| %>
+        <tr>
+          <td><%= fixed_expense.name %></td>
+          <td><%= fixed_expense.is_mandatory %></td>
+          <td class="text-right"><%= fixed_expense.default_amount %></td>
+          <td><%= fixed_expense.default_payee.firstname %> <%= fixed_expense.default_payee.lastname %></td>
+          <td>
+          <%= link_to 'Edit', edit_fixed_expense_expense_path(fixed_expense.id), class: "btn btn-primary" %>
+          <%= link_to 'Destroy', delete_fixed_expense_expense_path(fixed_expense), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to 'New fixed expense', new_fixed_expense_expenses_path, class: "btn btn-primary"  %>

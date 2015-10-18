@@ -1,0 +1,85 @@
+<div class="panel panel-primary">
+<div class="panel-heading">Update the fixed expense</div>
+<div class="panel-body">
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+
+<% if @expense_form.errors.any? %>
+    <div class="alert alert-danger">
+      <b><%= pluralize(@expense_form.errors.count, "Error") %> prohibited this expense from being saved:</b>
+      <ul>
+      <% @expense_form.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+<% end %>
+
+<%
+if @expense_form.id
+  url = expense_path(@expense_form.id)
+  method = 'put'
+else 
+  url = expenses_path
+  method = 'post'
+end
+%>
+
+<%= form_for(@expense_form, url: url, method: method, :html => {class: "form-horizontal"}) do |f| %>
+  <div class="form-group">
+    <%= f.label :user_id, 'Paid by', class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= f.collection_select(:user_id, @users, :id, :full_name, {}, {:class => 'form-control'}) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :expense_description, class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= f.text_field :expense_description, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :amount, class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= f.text_field :amount, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :expense_date, class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= f.date_select :expense_date, {}, {:class => "form-control", :style => "display: inline;width: 32.5%;"} %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :user_ids, 'Tenants', class: "col-sm-3 control-label" %>
+    <div class="col-sm-9">
+      <%= f.collection_check_boxes(:user_ids, @users, :id, :full_name) do |b| %>
+        <%= b.label do%>
+          <%=b.check_box(checked: true) + " " + b.text%>
+        <%end%>
+        <br/>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+      <%
+      if @expense_form.id
+      %>
+      <%= f.submit 'Update', :class => "btn btn-primary" %>
+      <%
+      else
+      %>
+      <%= f.submit 'Create', :class => "btn btn-primary" %>
+      <%
+      end
+      %>
+      <%= link_to 'Back', root_path, :class => "btn btn-default" %>
+    </div>
+  </div>
+<% end %>
+  </div>
+</div>
+</div>
+</div>
+

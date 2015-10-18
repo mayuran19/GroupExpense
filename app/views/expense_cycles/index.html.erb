@@ -1,0 +1,32 @@
+<div class="panel panel-primary">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Expense cycles</div>
+  <!-- Table -->
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Start date</th>
+        <th>End date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @expense_cycles.each do |expense_cycle| %>
+        <tr>
+          <td><%= expense_cycle.id %></td>
+          <td><%= expense_cycle.from_date %></td>
+          <td><%= expense_cycle.to_date %></td>
+          <td>
+            <% if @current_expense_cycle.id == expense_cycle.id %>
+              <%= authorized_link_to @current_user.id, @current_user.loggedin_group.id, 'Edit', edit_expense_cycle_path(expense_cycle), class: "btn btn-primary"  %>
+            <% else %>
+              <%= link_to 'Summary', expense_cycle_path(expense_cycle), class: "btn btn-primary"  %>
+            <% end %>
+            
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

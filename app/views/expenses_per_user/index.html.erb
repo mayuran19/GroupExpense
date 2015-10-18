@@ -1,0 +1,29 @@
+<div class="well well-sm">
+  Current account cycle: <%= @current_expense_cycle.from_date %> to <%= @current_expense_cycle.to_date %>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">Expenses per user</div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Factor</th>
+        <th class="text-right">Amount</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @expense.expenses_per_user.each do |expense_per_user| %>
+        <tr>
+          <td><%=expense_per_user.user.full_name%></td>
+          <td><%=expense_per_user.division_factor_per_user%> / <%=expense_per_user.division_factor%></td>
+          <td class="text-right"><%=expense_per_user.amount%></td>
+          <td>
+          <%= link_to 'Update', edit_expense_expenses_per_user_path(@expense, expense_per_user), class: "btn btn-primary" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
