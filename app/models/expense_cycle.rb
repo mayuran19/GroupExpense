@@ -2,7 +2,7 @@ class ExpenseCycle < ActiveRecord::Base
 	self.table_name = "grpexp.expense_cycles"
 
 	def self.get_current_expense_cycle(group_id)
-		current_account_cycle = ExpenseCycle.where("id = (select cast(setting_value as int) from grpexp.group_settings where setting_name = 'CURRENT_ACCOUNT_CYCLE') and group_id = ?", group_id).first
+		current_account_cycle = ExpenseCycle.where("id = (select cast(setting_value as int) from grpexp.group_settings where setting_name = 'CURRENT_ACCOUNT_CYCLE' and group_id = ?) and group_id = ?", group_id, group_id).first
 	end
 
 	def self.get_last_expense_cycle(group_id)

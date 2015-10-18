@@ -15,12 +15,11 @@ class Form::Registration
 		@groupname = attributes[:groupname]
 		@password = attributes[:password]
 		@confirm_password = attributes[:confirm_password]
-		if attributes[:start_date]
-			@start_date = Date.parse(attributes["start_date"].values.join("-"))
+		if(attributes['start_date(1i)'] != nil && attributes['start_date(2i)'] != nil && attributes['start_date(3i)'] != nil)
+			@start_date= Date.civil(attributes['start_date(1i)'].to_i, attributes['start_date(2i)'].to_i, attributes['start_date(3i)'].to_i)
 		else
 			@start_date = Date.today
 		end
-		
 	end
   
 	def persisted?
@@ -50,13 +49,13 @@ class Form::Registration
 	validate :equal_password_and_confirmation
 
 	def unique_username
-		if user = User.where(username: username).count > 0
+		if user = ::User.where(username: username).count > 0
 			errors.add(:username, "Username already taken")
 		end
 	end
 
 	def unique_groupname
-		if group = Group.where(groupname: groupname).count > 0
+		if group = ::Group.where(groupname: groupname).count > 0
 			errors.add(:username, "Group name already taken")
 		end
 	end

@@ -14,8 +14,8 @@ class Form::Expense
 		@fixed_expense_id = attributes[:fixed_expense_id]
 		@expense_description = attributes[:expense_description]
 		@amount = attributes[:amount]
-		if attributes[:expense_date]
-			@expense_date = Date.parse(attributes["expense_date"].values.join("-"))
+		if(attributes['expense_date(1i)'] != nil && attributes['expense_date(2i)'] != nil && attributes['expense_date(3i)'] != nil)
+			@expense_date= Date.civil(attributes['expense_date(1i)'].to_i, attributes['expense_date(2i)'].to_i, attributes['expense_date(3i)'].to_i)
 		else
 			@expense_date = Date.today
 		end
