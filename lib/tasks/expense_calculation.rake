@@ -227,6 +227,6 @@ task :generate_excel, [:group_id, :expense_cycle_id] => :environment do |t, args
       end
     end
 
-    p.serialize("./tmp/" + group.groupname + "_" + group_id + "_" + expense_cycle_id + ".xlsx")
+    p.serialize("./tmp/Expenses.xlsx")
   end
 end
