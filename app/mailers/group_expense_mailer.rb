@@ -9,6 +9,7 @@ class GroupExpenseMailer < ApplicationMailer
 
 	    @user = User.find_by_id(user_id)
 	    @group = Group.find_by_id(group_id)
+	    attachments['HouseAccount.xlsx'] = File.read("./tmp/" + @group.groupname + "_" + @group.id.to_s + "_" + expense_cycle_id.to_s + ".xlsx")
 	    mail(to: @user.email, subject: @group.groupname)
 	end
 end
