@@ -9,7 +9,7 @@ class GroupExpenseMailer < ApplicationMailer
 
 	    @user = User.find_by_id(user_id)
 	    @group = Group.find_by_id(group_id)
-	    attachments['HouseAccount.xlsx'] = File.read(Rails.root.to_s + "/files/Expenses_" + expense_cycle_id.to_s + ".xlsx")
+	    attachments['HouseAccount.xlsx'] = File.read("/tmp/Expenses_" + expense_cycle_id.to_s + ".xlsx")
 	    mail(to: @user.email, subject: @group.groupname)
 	end
 end
