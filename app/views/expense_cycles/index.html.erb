@@ -22,8 +22,8 @@
               <%= authorized_link_to @current_user.id, @current_user.loggedin_group.id, 'Edit', edit_expense_cycle_path(expense_cycle), class: "btn btn-primary"  %>
             <% else %>
               <%= link_to 'Summary', expense_cycle_path(expense_cycle), class: "btn btn-primary"  %>
+              <%= authorized_link_to @current_user.id, @current_user.loggedin_group.id, 'Send Email', send_email_expense_cycle_path(expense_cycle), class: "btn btn-primary"  %>
             <% end %>
-            
           </td>
         </tr>
       <% end %>

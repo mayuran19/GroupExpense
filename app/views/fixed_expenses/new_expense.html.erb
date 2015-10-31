@@ -35,14 +35,23 @@ method = 'post'
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :user_ids, 'Tenants', class: "col-sm-3 control-label" %>
+    <%= f.label :user_ids, 'Users', class: "col-sm-3 control-label" %>
     <div class="col-sm-9">
+      <table class="table">
       <%= f.collection_check_boxes(:user_ids, @users, :id, :full_name) do |b| %>
+      <tr>
+        <td>
         <%= b.label do%>
-          <%=b.check_box(checked: true) + " " + b.text%>
+          <%=b.check_box(checked: true, onchange: "enableOrDisableDivisionFactors(" + b.value.to_s + ")") + " " + b.text%>
         <%end%>
         <br/>
+        </td>
+        <td>
+        <%= f.text_field :division_factor, value: "1", name: "form_expense[division_factor]" + "[" + b.value.to_s + "]", id: "form_expense_division_factor_" + b.value.to_s, class: "form-control" %>
+        </td>
+        </tr>
       <% end %>
+      </table>
     </div>
   </div>
   <div class="form-group">

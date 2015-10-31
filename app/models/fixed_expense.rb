@@ -8,7 +8,7 @@ class FixedExpense < ActiveRecord::Base
   	end
 
   	def self.fixed_expenses_not_paid_for_current_cycle(group_id)
-  		FixedExpense.where("group_id = ? and id not in(select fixed_expense_id from grpexp.expenses where group_id = ? and expense_cycle_id = (select to_number(setting_value,'9') from grpexp.group_settings where setting_name = 'CURRENT_ACCOUNT_CYCLE' and group_id = ?) and fixed_expense_id is not null)", group_id, group_id, group_id)
+  		FixedExpense.where("group_id = ? and id not in(select fixed_expense_id from grpexp.expenses where group_id = ? and expense_cycle_id = (select cast(setting_value as int) from grpexp.group_settings where setting_name = 'CURRENT_ACCOUNT_CYCLE' and group_id = ?) and fixed_expense_id is not null)", group_id, group_id, group_id)
   	end
 
   	def self.new_fixed_expense(fixed_expense_form, group_id)

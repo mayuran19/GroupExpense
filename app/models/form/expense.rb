@@ -21,6 +21,7 @@ class Form::Expense
 		end
 		@expense_cycle_id = attributes[:expense_cycle_id]
 		@user_ids = attributes[:user_ids]
+		@division_factor = attributes[:division_factor]
 	end
 
 	def persisted?
@@ -36,6 +37,7 @@ class Form::Expense
 	attr_accessor :expense_date
 	attr_accessor :expense_cycle_id
 	attr_accessor :user_ids
+	attr_accessor :division_factor
 
 	validates :expense_description, presence: true
 	validates :amount, numericality: true

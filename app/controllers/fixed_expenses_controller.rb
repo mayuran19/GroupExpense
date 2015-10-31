@@ -70,7 +70,9 @@ class FixedExpensesController < ApplicationController
     end
 
     def set_expense_params
-    	params.require(:form_expense).permit(:user_id, :expense_description, :amount, :expense_date, :user_ids => [])
+    	params.require(:form_expense).permit(:user_id, :expense_description, :amount, :expense_date, :user_ids => []).tap do |whitelisted|
+    		whitelisted[:division_factor] = params[:form_expense][:division_factor]
+    	end
     end
 
     def set_id

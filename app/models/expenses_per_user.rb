@@ -16,5 +16,11 @@ class ExpensesPerUser < ActiveRecord::Base
 															group by user_id", group_id, expense_cycle_id])
 
   		total_per_tenants
-  end
+    end
+
+    def self.find_all_by_expense_id(expense_id)
+      expense_per_user = ExpensesPerUser.where(:expense_id => expense_id)
+
+      expense_per_user
+    end
 end

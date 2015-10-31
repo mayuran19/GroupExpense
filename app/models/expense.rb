@@ -11,6 +11,14 @@ class Expense < ActiveRecord::Base
   	end
 
   	def self.create_expense(expense_form, group_id, fixed_expense_id)
+        puts "11111111111111111111"
+        puts "#{expense_form.division_factor.class}"
+        total_factor = 0
+        puts expense_form.division_factor
+        expense_form.division_factor.each do |k,v|
+            total_factor = total_factor + v.to_f
+        end
+        puts "22222222222222222222"
     		expense = Expense.new
     		expense.group_id = group_id
     		expense.user_id = expense_form.user_id
@@ -27,9 +35,9 @@ class Expense < ActiveRecord::Base
       			expenses_per_user.expense_id = expense.id
       			expenses_per_user.user_id = user_id
       			expenses_per_user.group_id = group_id
-      			expenses_per_user.amount = expense.amount / user_ids_without_empty.size
-            expenses_per_user.division_factor = user_ids_without_empty.size
-            expenses_per_user.division_factor_per_user = 1
+      			expenses_per_user.amount = (expense.amount / total_factor) * expense_form.division_factor[user_id.to_s].to_f
+            expenses_per_user.division_factor = total_factor
+            expenses_per_user.division_factor_per_user = expense_form.division_factor[user_id.to_s]
       			expenses_per_user.save
       	end
   	end
@@ -81,5 +89,11 @@ class Expense < ActiveRecord::Base
                           (select id, 0 as amount from grpexp.users) t2 on t1.user_id = t2.id",group_id,expense_cycle_id])
 
         spending_by_tenants
+    end
+
+    def self.find_by_group_id_and_expense_cycle(group_id, expense_cycle_id)
+        expenses = Expense.where(:group_id => group_id, :expense_cycle_id => expense_cycle_id)
+
+        expenses
     end
 end

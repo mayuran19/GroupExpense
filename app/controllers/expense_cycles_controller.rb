@@ -36,6 +36,16 @@ class ExpenseCyclesController < ApplicationController
 		end
 	end
 
+	def send_email
+		expense_cycle = ExpenseCycle.find_by_id(set_id)
+		users = Group.get_users_by_group_id(current_user.loggedin_group.id)
+		users.each do |user|
+			GroupExpenseMailer.send_expense_detail(current_user.loggedin_group.id, expense_cycle.id, user.id).deliver_now
+		end
+		
+		redirect_to expense_cycles_path
+	end
+
 	private
 
 	def set_id
