@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   resources :registrations
   resources :users
   resources :expenses_summary
-  resources :expense_cycles
+
+  resources :expense_cycles do
+      member do
+          get :send_email
+      end
+  end
   
   resources :fixed_expenses do
       member do
