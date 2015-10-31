@@ -36,6 +36,8 @@ gem 'bootstrap-sass', '~> 3.3.5'
 
 gem "bcrypt"
 
+gem "axlsx"
+
 #gem "pundit"
 
 group :development, :test do
